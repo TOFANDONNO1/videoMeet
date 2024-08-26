@@ -1,11 +1,18 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const { Server, Socket } = require("socket.io");
+const { createServer } = require("http");
+
 const cors = require("cors");
 const io = new Server({cors:true});
 const app = express();
-app.use(cors());
+app.use(cors({
+    origin:"*"}
+));
+app.use(express.json());
+
 app.use(bodyParser.json());
+const server = createServer(app);
 
 const emailToSocketMapping = new Map();
 const socketToEmailMapping = new Map();
@@ -46,5 +53,5 @@ app.get("/", (req, res) => {
     res.status(error).send("Error: " + error);
   }
 });
-app.listen(8000, () => console.log("Http server listening on 8000"));
-io.listen(8001);
+server.listen(8000, () => console.log("Http server listening on 8000"));
+

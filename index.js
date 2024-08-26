@@ -2,13 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const { Server, Socket } = require("socket.io");
 const cors = require("cors");
-const io = new Server({
-    cors: {
-        origin: "http://localhost:3000", // Allow this origin
-        methods: ["GET", "POST"],        // Allow these HTTP methods
-        credentials: true,               // Allow cookies to be sent with requests
-      }
-});
+const io = new Server({cors:true});
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
